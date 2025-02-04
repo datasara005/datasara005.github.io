@@ -1,0 +1,29 @@
+
+  
+  body {
+    background-color: #ffffff;
+    color: #000000;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .navbar {
+    background-color: #f8f9fa;
+  }
+  
+  .nav-link {
+    color: #007bff;
+  }
+  
+  body.dark-mode {
+    background-color: #333333;
+    color: #ffffff;
+  }
+  
+  .navbar.dark-mode {
+    background-color: #222222;
+  }
+  
+  .nav-link.dark-mode {
+    color: #ff6347;
+  }
+  
