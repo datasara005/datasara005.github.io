@@ -4,12 +4,12 @@ import ProductList from './components/ProductList';
 import AddProduct from './components/AddProduct';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Cart from './components/Cart';
-import './App.css'
+import { motion, AnimatePresence } from 'framer-motion';
+import './App.css';
 
 const App: React.FC = () => {
   const [darkMode, setDarkMode] = useState<boolean>(false);
 
-  // Apply dark mode from localStorage on initial load
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'dark') {
@@ -20,12 +20,11 @@ const App: React.FC = () => {
     }
   }, []);
 
-  // Toggle dark mode and save to localStorage
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
     if (!darkMode) {
       document.body.classList.add('dark-mode');
-localStorage.setItem('theme', 'dark');
+      localStorage.setItem('theme', 'dark');
     } else {
       document.body.classList.remove('dark-mode');
       localStorage.setItem('theme', 'light');
@@ -43,19 +42,61 @@ localStorage.setItem('theme', 'dark');
             <Link className="nav-link" to="/add-product">Add Products</Link>
             <Link className="nav-link" to="/cart">Cart</Link>
           </div>
-          <button
+          <motion.button
             className="btn btn-secondary"
             onClick={toggleDarkMode}
+            initial={{ scale: 1 }} 
+            whileHover={{ scale: 1.1 }} 
+            whileTap={{ scale: 0.9 }} 
+            transition={{ duration: 0.2 }} 
           >
             {darkMode ? 'Light Mode' : 'Dark Mode'}
-          </button>
+          </motion.button>
         </div>
 
-        <Routes>
-          <Route path="/" element={<ProductList />} />
-          <Route path="/add-product" element={<AddProduct />} />
-          <Route path="/cart" element={<Cart />} />
-        </Routes>
+        
+        <AnimatePresence mode="wait">
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <ProductList />
+                </motion.div>
+              }
+            />
+            <Route
+              path="/add-product"
+              element={
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <AddProduct />
+                </motion.div>
+              }
+            />
+            <Route
+              path="/cart"
+              element={<motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <Cart />
+                </motion.div>
+              }
+            />
+          </Routes>
+        </AnimatePresence>
       </div>
     </Router>
   );
